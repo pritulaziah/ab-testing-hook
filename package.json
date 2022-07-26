@@ -28,9 +28,12 @@
   },
   "homepage": "https://github.com/pritulaziah/ab-testing-nextjs#readme",
   "devDependencies": {
+    "@types/blueimp-md5": "^2.18.0",
+    "@types/react": "^18.0.15",
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "blueimp-md5": "^2.19.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
