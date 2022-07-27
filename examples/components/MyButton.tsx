@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useExperimentVariant } from "../../dist";
+import { useExperimentVariant } from "ab-testing-hook";
 
 const defaultClasses = ['text-white', 'bg-blue-700'];
 const variantClasses = {
