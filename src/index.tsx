@@ -5,7 +5,6 @@ import { IExperiment, IExperimentGroup } from "./misc/types";
 const getExperimentGroup = (
   uuid: string,
   { name: experimentName, trafficPercentRange = 1, groups = [] }: IExperiment,
-  debugMode?: boolean
 ) => {
   const [minPercent, maxPercent] = Array.isArray(trafficPercentRange)
     ? trafficPercentRange
@@ -25,14 +24,7 @@ const getExperimentGroup = (
   const currentId =
     Number(`0x${md5(experimentName, uuid).slice(0, 8)}`) / 0xffffffff;
 
-  if (debugMode) {
-    console.log(`Your ${uuid} with ${experimentName} = ${currentId}.`);
-  }
-
   if (currentId < minPercent || currentId >= maxPercent) {
-    if (debugMode) {
-      console.log(`You are out of traffic. Coz ${currentId} < ${minPercent} or ${currentId} >= ${maxPercent}`);
-    }
     return null;
   }
 
@@ -48,10 +40,6 @@ const getExperimentGroup = (
     return preparedId < groupWeight;
   });
 
-  if (debugMode) {
-    console.log(`Your group is ${currentGroup?.name || null}`);
-  }
-
   return currentGroup?.name || null;
 };
 
@@ -61,13 +49,9 @@ interface ABTestContextProps {
    */
   userId?: string | null;
   /**
-   * Array experiments
+   * Experiments array
    */
   experiments?: IExperiment[] | null;
-  /**
-   * Debug mode
-   */
-  debugMode?: boolean
 }
 
 const ABTestContext = React.createContext<ABTestContextProps>(
@@ -79,7 +63,7 @@ interface ABTestProviderProps extends ABTestContextProps {
 }
 
 const useExperimentVariant = (experimentName: string) => {
-  const { experiments, userId, debugMode } = useContext(ABTestContext);
+  const { experiments, userId } = useContext(ABTestContext);
 
   const variant = useMemo(() => {
     const currentExperiment =
@@ -87,13 +71,8 @@ const useExperimentVariant = (experimentName: string) => {
       userId &&
       experiments.find((experiment) => experiment.name === experimentName);
 
-    if (debugMode) {
-      console.log(`Experiment was be ${!!currentExperiment ? `founded: ${currentExperiment.name}` : 'not founded'}`);
-      !!currentExperiment && console.dir(currentExperiment);
-    }
-
     const variantName = currentExperiment
-      ? getExperimentGroup(userId, currentExperiment, debugMode)
+      ? getExperimentGroup(userId, currentExperiment)
       : null;
 
     return variantName;
@@ -106,9 +85,8 @@ const ABTestProvider = ({
   children,
   userId,
   experiments,
-  debugMode,
 }: ABTestProviderProps) => {
-  const value = useMemo(() => ({ userId, experiments, debugMode }), [userId, experiments, debugMode]);
+  const value = useMemo(() => ({ userId, experiments }), [userId, experiments]);
 
   return (
     <ABTestContext.Provider value={value}>{children}</ABTestContext.Provider>
