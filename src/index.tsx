@@ -115,52 +115,7 @@ const ABTestProvider = ({
   );
 };
 
-interface ExperimentProps {
-  name: string;
-  children: React.ReactNode;
-}
-
-const Experiment = ({ name: experimentName, children }: ExperimentProps) => {
-  const variantName = useExperimentVariant(experimentName);
-  const variants = children ? React.Children.toArray(children) : [];
-  const currentVariant =
-    variantName &&
-    variants.find((variant) => {
-      if (React.isValidElement<VariantProps>(variant)) {
-        return variant.props.name === variantName;
-      }
-
-      return false;
-    });
-
-  if (currentVariant) {
-    return currentVariant;
-  }
-
-  const defaultVariant = variants.find((variant) => {
-    if (React.isValidElement<VariantProps>(variant)) {
-      return variant.props.default;
-    }
-
-    return false;
-  });
-
-  return defaultVariant || null;
-};
-
-interface VariantProps {
-  name?: string;
-  children?: React.ReactNode;
-  default?: boolean;
-}
-
-const Variant = ({ children }: VariantProps) => children;
-
 export {
-  Variant,
-  VariantProps,
-  Experiment,
-  ExperimentProps,
   ABTestProvider,
   ABTestProviderProps,
   useExperimentVariant,

@@ -7,19 +7,15 @@ const variantClasses = {
   'variantB': ['text-white', 'bg-gray-800'],
 };
 
-interface IProps {
-  children: React.ReactNode
-}
-
-const Button = ({ children }: IProps) => {
+const MyButton = () => {
   const variantName = useExperimentVariant('new_button');
   const currentClasses = variantName ? variantClasses[variantName as 'variantA' | 'variantB'] : defaultClasses;
 
   return (
     <button type="button" className={clsx('font-medium rounded-lg text-sm px-4 py-2', currentClasses)}>
-      {children}
+      {`This is ${variantName || 'default'} button`}
     </button>
   )
 }
 
-export default Button;
+export default MyButton;

@@ -1,7 +1,7 @@
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import { v4 as uuidv4 } from "uuid";
-import Button from "../components/Button";
+import MyButton from "../components/MyButton";
 import { IExperiment, ABTestProvider } from "../../dist/index";
 
 enum Devices {
@@ -35,8 +35,8 @@ const Home: NextPage<IProps> = ({ userId, experiments }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="p-4">
-        <Button>This welcome text</Button>
+      <div className="p-4 mb-4">
+        <MyButton />
       </div>
     </ABTestProvider>
   );

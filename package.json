@@ -1,5 +1,5 @@
 {
-  "name": "ab-testing-nextjs",
+  "name": "ab-testing-hook",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,10 +8,7 @@
     "build": "tsc"
   },
   "keywords": [
-    "next",
-    "next.js",
     "react",
-    "react-component",
     "testing",
     "ab test",
     "A/B testing",
@@ -21,13 +18,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pritulaziah/ab-testing-nextjs.git"
+    "url": "git+https://github.com/pritulaziah/ab-testing-hook.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/pritulaziah/ab-testing-nextjs/issues"
+    "url": "https://github.com/pritulaziah/ab-testing-hook/issues"
   },
-  "homepage": "https://github.com/pritulaziah/ab-testing-nextjs#readme",
+  "homepage": "https://github.com/pritulaziah/ab-testing-hook#readme",
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.0",
     "@types/react": "^18.0.15",
