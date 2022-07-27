@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import md5 from "blueimp-md5";
-import { IExperiment } from "./misc/types";
+import { IExperiment, IExperimentGroup } from "./misc/types";
 
 const getExperimentGroup = (
   uuid: string,
@@ -41,7 +41,7 @@ const getExperimentGroup = (
     return preparedId < groupWeight;
   });
 
-  return currentGroup || null;
+  return currentGroup?.name || null;
 };
 
 interface ABTestContextProps {
@@ -63,7 +63,7 @@ interface ABTestProviderProps extends ABTestContextProps {
   children?: React.ReactNode;
 }
 
-const useVariant = (experimentName: string) => {
+const useExperimentVariant = (experimentName: string) => {
   const { experiments, userId } = useContext(ABTestContext);
 
   const variant = useMemo(() => {
@@ -76,7 +76,7 @@ const useVariant = (experimentName: string) => {
       : null;
 
     return variantName;
-  }, [userId]);
+  }, [userId, experiments]);
 
   return variant;
 };
@@ -86,7 +86,7 @@ const ABTestProvider = ({
   userId,
   experiments,
 }: ABTestProviderProps) => {
-  const value = useMemo(() => ({ userId, experiments }), [userId]);
+  const value = useMemo(() => ({ userId, experiments }), [userId, experiments]);
 
   return (
     <ABTestContext.Provider value={value}>{children}</ABTestContext.Provider>
@@ -99,13 +99,13 @@ interface ExperimentProps {
 }
 
 const Experiment = ({ name: experimentName, children }: ExperimentProps) => {
-  const variantName = useVariant(experimentName);
+  const variantName = useExperimentVariant(experimentName);
   const variants = children ? React.Children.toArray(children) : [];
   const currentVariant =
     variantName &&
     variants.find((variant) => {
       if (React.isValidElement<VariantProps>(variant)) {
-        return variant.props.name === variantName.name;
+        return variant.props.name === variantName;
       }
 
       return false;
@@ -141,6 +141,8 @@ export {
   ExperimentProps,
   ABTestProvider,
   ABTestProviderProps,
-  useVariant,
+  useExperimentVariant,
   ABTestContextProps,
+  IExperiment,
+  IExperimentGroup,
 };
