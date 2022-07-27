@@ -57,7 +57,7 @@ const getExperimentGroup = (
 
 interface ABTestContextProps {
   /**
-   * user identifier, like uuid
+   * User identifier, for example uuid
    */
   userId?: string | null;
   /**
@@ -65,7 +65,7 @@ interface ABTestContextProps {
    */
   experiments?: IExperiment[] | null;
   /**
-   * debug mode
+   * Debug mode
    */
   debugMode?: boolean
 }
