@@ -181,10 +181,10 @@
     "@typescript-eslint/types" "5.31.0"
     "eslint-visitor-keys" "^3.3.0"
 
-"ab-testing-hook@^1.0.4":
-  "integrity" "sha512-CZX0WVFEv8Z6u/8DfqsBqg5kBNX4rJFUDMw1GDWBCZrFgj9Ai0XDMQpj0JuyJPXe5J6/tFRKCervHRfW+d5C/w=="
-  "resolved" "https://registry.npmjs.org/ab-testing-hook/-/ab-testing-hook-1.0.4.tgz"
-  "version" "1.0.4"
+"ab-testing-hook@^1.0.5":
+  "integrity" "sha512-ZzOLMTHMcgopteulPEpHpmmyGb9U/hfLUAk3aljmagTtPzHmuVyt8YFmIfLvTOAOWo6qgUqk2MOfpAc4l5HX0Q=="
+  "resolved" "https://registry.npmjs.org/ab-testing-hook/-/ab-testing-hook-1.0.6.tgz"
+  "version" "1.0.6"
   dependencies:
     "blueimp-md5" "^2.19.0"
     "react" "^18.2.0"

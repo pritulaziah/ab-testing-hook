@@ -40,7 +40,6 @@ const Home: NextPage<IProps> = ({ userId, experiments }) => {
     <ABTestProvider
       userId={exampleUserId}
       experiments={experiments}
-      debugMode={process.env.NODE_ENV === "development"}
     >
       <Head>
         <title>Create Next App</title>
@@ -62,7 +61,7 @@ const Home: NextPage<IProps> = ({ userId, experiments }) => {
           </div>
           <div className="flex">
             {experiments.map(experiment => (
-              <div className="flex flex-col ml-8 first-of-type:ml-0">
+              <div className="flex flex-col ml-8 first-of-type:ml-0" key={experiment.name}>
                 <h4 className="text-md text-slate-800 mb-2 font-medium">Experiment: {experiment.name}</h4>
                 <div className="w-60 h-auto">
                   <PieChart

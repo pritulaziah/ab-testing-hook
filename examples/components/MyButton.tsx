@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useExperimentVariant } from "ab-testing-hook";
+import { useEffect } from "react";
 
 const defaultClasses = ["bg-blue-700", "hover:bg-blue-800"];
 const variantClasses = {
@@ -12,6 +13,12 @@ const MyButton = () => {
   const currentClasses = variantName
     ? variantClasses[variantName as "variantA" | "variantB"]
     : defaultClasses;
+
+  useEffect(() => {
+    if (variantName) {
+      console.log(`I'm a variant = ${variantName}`); // or go to push datalayer analytics
+    }
+  }, []);
 
   return (
     <button
