@@ -8,7 +8,7 @@ const variantClasses = {
   variantB: ["bg-purple-700", "hover:bg-purple-800"],
 };
 
-const MyButton = () => {
+const MyExperiment = () => {
   const variantName = useExperimentVariant("new_button");
   const currentClasses = variantName
     ? variantClasses[variantName as "variantA" | "variantB"]
@@ -21,16 +21,19 @@ const MyButton = () => {
   }, []);
 
   return (
-    <button
-      type="button"
-      className={clsx(
-        "text-white font-medium rounded-lg text-sm px-4 py-2 transition-colors",
-        currentClasses
-      )}
-    >
-      {`This is ${variantName || "default"} button`}
-    </button>
+    <div className="flex flex-row items-center">
+      <h4 className="mr-4">Result my experiment:</h4>
+      <button
+        type="button"
+        className={clsx(
+          "text-white font-medium rounded-lg text-sm px-4 py-2 transition-colors",
+          currentClasses
+        )}
+      >
+        {`This is ${variantName || "default"} button`}
+      </button>
+    </div>
   );
 };
 
-export default MyButton;
+export default MyExperiment;

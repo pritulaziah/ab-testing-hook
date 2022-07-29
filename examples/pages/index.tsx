@@ -1,7 +1,7 @@
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import { v4 as uuidv4 } from "uuid";
-import MyButton from "../components/MyButton";
+import MyExperiment from "../components/MyExperiment";
 import { IExperiment, IExperimentGroup, ABTestProvider } from "ab-testing-hook";
 import { useState } from "react";
 import { PieChart } from "react-minimal-pie-chart";
@@ -17,14 +17,14 @@ interface MyExperimentGroup extends IExperimentGroup {
   id: number;
 }
 
-interface MyExperiment extends Omit<IExperiment, "groups"> {
+interface IMyExperiment extends Omit<IExperiment, "groups"> {
   devices: Devices[];
   groups: MyExperimentGroup[];
 }
 
 interface IProps {
   userId: string;
-  experiments: MyExperiment[];
+  experiments: IMyExperiment[];
 }
 
 const getColor = (index: number) => {
@@ -35,11 +35,12 @@ const getColor = (index: number) => {
 
 const Home: NextPage<IProps> = ({ userId, experiments }) => {
   const [exampleUserId, setExampleUserId] = useState(userId);
+  const [exampleExperiment] = experiments;
 
   return (
     <ABTestProvider
       userId={exampleUserId}
-      experiments={experiments}
+      experiments={exampleExperiment}
     >
       <Head>
         <title>Create Next App</title>
@@ -48,44 +49,40 @@ const Home: NextPage<IProps> = ({ userId, experiments }) => {
       </Head>
       <div className="max-w-screen-xl flex flex-col w-full mx-auto p-14">
         <div className="mb-10">
-          <div className="flex items-center mb-4">
-            <div className="text-lg text-slate-800">
+          <div className="flex flex-col items-start mb-4 lg:flex-row lg:items-center">
+            <div className="text-lg text-slate-800 mb-2 lg:mb-0">
               Your userid: <span className="font-medium">{exampleUserId}</span>.
             </div>
             <button
-              className="ml-2 py-2 px-4 text-sm rounded-lg font-medium text-white bg-blue-700 hover:bg-blue-800 transition-colors"
+              className="py-2 px-4 text-sm rounded-lg font-medium text-white bg-blue-700 hover:bg-blue-800 transition-colors lg:ml-2"
               onClick={() => setExampleUserId(uuidv4())}
             >
               Click to change uuid
             </button>
           </div>
-          <div className="flex">
-            {experiments.map(experiment => (
-              <div className="flex flex-col ml-8 first-of-type:ml-0" key={experiment.name}>
-                <h4 className="text-md text-slate-800 mb-2 font-medium">Experiment: {experiment.name}</h4>
-                <div className="w-60 h-auto">
-                  <PieChart
-                    data={experiments[0].groups.map((group, index) => ({
-                      title: group.name,
-                      value: group.weight,
-                      color: getColor(index),
-                    }))}
-                    label={({ dataEntry }) =>
-                      `${dataEntry.title}: ${Math.round(dataEntry.percentage)}%`
-                    }
-                    labelStyle={{
-                      fontSize: "6px",
-                    }}
-                  />
-                </div>
+          <div className="flex flex-col">
+            <h4 className="text-md text-slate-800 mb-2 font-medium">Example experiment: {exampleExperiment.name}</h4>
+            <div className="flex">
+              <div className="w-60 h-auto">
+                <PieChart
+                  data={exampleExperiment.groups.map((group, index) => ({
+                    title: group.name,
+                    value: group.weight,
+                    color: getColor(index),
+                  }))}
+                  label={({ dataEntry }) =>
+                    `${dataEntry.title}: ${Math.round(dataEntry.percentage)}%`
+                  }
+                  labelStyle={{
+                    fontSize: "6px",
+                  }}
+                />
               </div>
-            ))}
+
+            </div>
           </div>
         </div>
-        <div className="flex flex-start items-center">
-          <div className="mr-4">Experiment:</div>
-          <MyButton />
-        </div>
+        <MyExperiment />
       </div>
     </ABTestProvider>
   );
@@ -95,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // from cookie get user identifier if dont have generate and set
   const userId = uuidv4();
   // from backend get experiments, filtering by device, statuses, etc
-  const experiments: MyExperiment[] = [
+  const experiments: IMyExperiment[] = [
     {
       devices: [Devices.Desktop],
       name: "new_button",
