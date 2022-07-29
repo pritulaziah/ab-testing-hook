@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint ./src --ext .ts,.tsx --cache"
   },
   "files": [
     "dist"
@@ -34,6 +35,11 @@
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.0",
     "@types/react": "^18.0.15",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
