@@ -1,6 +1,6 @@
 {
   "name": "ab-testing-hook",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A React hook for A/B testing.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

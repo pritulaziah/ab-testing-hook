@@ -7,3 +7,9 @@ A React hook for A/B testing.
 Example on CodeSandbox:
 
 [![edit-ab-testing-hook](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/pritulaziah/ab-testing-hook/tree/main/examples)
+
+## Installation
+
+```sh
+npm install ab-testing-hook
+```
